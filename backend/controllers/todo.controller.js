@@ -7,7 +7,7 @@ const createTodo = async (req, res, next) => {
     if (!text) {
       return next(new CustomAPIError(400, "All filed are required"));
     }
-    const todo = await Todo.create({ text });
+    const todo = await Todo.create({ text, user:req.user._id });
     res.status(201).json({ todo, msg: "Todo is created" });
   } catch (error) {
     next(error);
@@ -16,7 +16,7 @@ const createTodo = async (req, res, next) => {
 
 const getAllTodos = async (req, res, next) => {
   try {
-    const todos = await Todo.find({});
+    const todos = await Todo.find({}).populate('user');
     if (!todos) {
       return next(new CustomAPIError(404, "Todos not found"));
     }
@@ -26,6 +26,19 @@ const getAllTodos = async (req, res, next) => {
   }
 };
 
+const getSingalTodo = async(req, res, next)=> {
+  try {
+    const {id} = req.params;
+    const todo = await Todo.findById(id);
+    if(!todo) {
+      return next(new CustomAPIError(404, 'Todo not found'));
+    }
+    res.status(200).json({todo});
+  } catch (error) {
+    next(error);
+  }
+}
+
 const deleteTodo = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -33,7 +46,7 @@ const deleteTodo = async (req, res, next) => {
     if (!todo) {
       return next(new CustomAPIError(404, "Todo not found"));
     }
-    res.status(200).json({ msg: "todo deleted successfull" });
+    res.status(200).json({ todo, msg: "todo deleted successfull" });
   } catch (error) {
     next(error);
   }
@@ -53,4 +66,4 @@ const toggleTodo = async (req, res, next) => {
   }
 };
 
-export { createTodo, getAllTodos, deleteTodo,toggleTodo };
+export { createTodo, getAllTodos, deleteTodo,toggleTodo, getSingalTodo };
