@@ -32,19 +32,18 @@ const Login = ()=> {
 
     return (
       <>
-      <form className='w-80 shadow' onSubmit={(e)=> handleSubmit(e)}>
-        <h1>Login</h1>
+      <form className='w-80 shadow' onSubmit={(e)=> handleSubmit(e)} class="shadow-md w-[40%] mx-auto py-5 mt-10 flex flex-col justify-center items-center gap-5">
+        <h1 class="text-center text-2xl font-bold font-mono">Login</h1>
       
         <div>
-          <input type="email" placeholder="Email" name="email" onChange={(e)=> handleChange(e)} />
+          <input type="email" placeholder="Email" name="email" onChange={(e)=> handleChange(e)} class="text-center py-2 px-10 border-2 border-gray-500 outline-none rounded-md"/>
         </div>
         <div>
-          <input type="password" placeholder="password" name="password" onChange={(e)=> handleChange(e)} />
+          <input type="password" placeholder="password" name="password" onChange={(e)=> handleChange(e)} class="text-center py-2 px-10 border-2 border-gray-500 outline-none rounded-md"/>
         </div>
-        <div>
-          <button type="submit">Login</button>
+          <button type="submit" class="px-3 py-1 rounded-md bg-green-400">Login</button>
           
-        </div>
+        
         
       </form>
       </>
